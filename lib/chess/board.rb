@@ -6,6 +6,7 @@ module Chess
 
     def initialize(squares = nil)
       @squares = squares || default_starting_position
+      validate_position
     end
 
     def to_s
@@ -24,6 +25,14 @@ module Chess
         %w{P P P P P P P P},
         %w{R N B Q K B N R}
       ]
+    end
+
+    def validate_position
+      if @squares.size != 8
+        raise ArgumentError, "Board must have 8 ranks"
+      elsif @squares.any? {|file| file.size != 8 }
+        raise ArgumentError, "Each rank must have 8 files"
+      end
     end
   end
 end

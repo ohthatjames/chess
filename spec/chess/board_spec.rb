@@ -31,4 +31,53 @@ describe Chess::Board do
       EOF
     end
   end
+
+  describe "#initialize" do
+    it "takes a position as an array" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil]
+      ])
+      board.should match_position <<-EOF
+        K.......
+        ........
+        ........
+        ........
+        ........
+        ........
+        ........
+        ..k.....
+      EOF
+    end
+
+    it "raises an error if the board has less than 8 ranks" do
+      expect { Chess::Board.new([[nil] * 8] * 7) }.to raise_error(ArgumentError)
+    end
+
+    it "raises an error if the board has more than 8 ranks" do
+      expect { Chess::Board.new([[nil] * 8] * 9) }.to raise_error(ArgumentError)
+    end
+
+    it "raises an error if the board has a rank with more than 8 files" do
+      8.times do |i|
+        squares = [[nil] * 8] * 8
+        squares[i] << nil
+        expect { Chess::Board.new(squares) }.to raise_error(ArgumentError)
+      end
+    end
+
+    it "raises an error if the board has a rank with more than 8 files" do
+      8.times do |i|
+        squares = [[nil] * 8] * 8
+        squares[i].pop
+        expect { Chess::Board.new(squares) }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end

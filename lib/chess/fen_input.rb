@@ -1,6 +1,9 @@
 class FenInput
   def initialize(fen)
     @fen = fen
+    if pieces_from_fen =~ /([^KQRBNPkqrbnp\d\.\/])/
+      raise ArgumentError, "Invalid character: #{$1}"
+    end
   end
 
   def squares

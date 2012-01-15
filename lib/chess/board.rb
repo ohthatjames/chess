@@ -1,5 +1,8 @@
 module Chess
   class Board
+    RANK_COUNT = 8
+    FILE_COUNT = 8
+
     def self.from_fen(fen)
       new(FenInput.new(fen).squares)
     end
@@ -28,9 +31,9 @@ module Chess
     end
 
     def validate_position
-      if @squares.size != 8
+      if @squares.size != RANK_COUNT
         raise ArgumentError, "Board must have 8 ranks"
-      elsif @squares.any? {|file| file.size != 8 }
+      elsif @squares.any? {|file| file.size != FILE_COUNT }
         raise ArgumentError, "Each rank must have 8 files"
       end
     end

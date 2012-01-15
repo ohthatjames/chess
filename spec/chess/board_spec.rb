@@ -56,25 +56,27 @@ describe Chess::Board do
       EOF
     end
 
+    let(:default_squares) { [[nil] * Chess::Board::FILE_COUNT] * Chess::Board::RANK_COUNT }
+
     it "raises an error if the board has less than 8 ranks" do
-      expect { Chess::Board.new([[nil] * 8] * 7) }.to raise_error(ArgumentError)
+      expect { Chess::Board.new(default_squares.tap(&:pop)) }.to raise_error(ArgumentError)
     end
 
     it "raises an error if the board has more than 8 ranks" do
-      expect { Chess::Board.new([[nil] * 8] * 9) }.to raise_error(ArgumentError)
+      expect { Chess::Board.new(default_squares.tap {|s| s << ([nil] * 8)}) }.to raise_error(ArgumentError)
     end
 
     it "raises an error if the board has a rank with more than 8 files" do
-      8.times do |i|
-        squares = [[nil] * 8] * 8
+      Chess::Board::RANK_COUNT.times do |i|
+        squares = default_squares
         squares[i] << nil
         expect { Chess::Board.new(squares) }.to raise_error(ArgumentError)
       end
     end
 
     it "raises an error if the board has a rank with more than 8 files" do
-      8.times do |i|
-        squares = [[nil] * 8] * 8
+      Chess::Board::RANK_COUNT.times do |i|
+        squares = default_squares
         squares[i].pop
         expect { Chess::Board.new(squares) }.to raise_error(ArgumentError)
       end

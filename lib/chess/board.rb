@@ -9,7 +9,13 @@ module Chess
     end
 
     def to_s
-      position = @squares || <<-EOF
+      position = @squares || default_starting_position
+      position.strip.tr(' ', '')
+    end
+
+    private
+    def default_starting_position
+      <<-EOF
         rnbqkbnr
         pppppppp
         ........
@@ -19,7 +25,6 @@ module Chess
         PPPPPPPP
         RNBQKBNR
       EOF
-      position.strip.tr(' ', '')
     end
   end
 end

@@ -5,11 +5,11 @@ module Chess
     end
 
     def initialize(squares = nil)
-      @squares = squares
+      @squares = squares || default_starting_position
     end
 
     def to_s
-      position = @squares || default_starting_position
+      position = @squares
       position.strip.tr(' ', '')
     end
 

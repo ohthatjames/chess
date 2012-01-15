@@ -1,8 +1,7 @@
 module Chess
   class Board
     def self.from_fen(fen)
-      squares = FenInput.new(fen).squares
-      new(squares.strip)
+      new(FenInput.new(fen).squares)
     end
 
     def initialize(squares = nil)

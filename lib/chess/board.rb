@@ -1,11 +1,7 @@
 module Chess
   class Board
     def self.from_fen(fen)
-      new(array_to_string(FenInput.new(fen).squares))
-    end
-
-    def self.array_to_string(array)
-      array.map {|rank| rank.map {|file| file.nil? ? "." : file }.join }.join("\n")
+      new(FenInput.new(fen).squares)
     end
 
     def initialize(squares = nil)
@@ -13,12 +9,12 @@ module Chess
     end
 
     def to_s
-      @squares.strip.tr(' ', '')
+      @squares.map {|rank| rank.map {|file| file.nil? ? "." : file }.join }.join("\n")
     end
 
     private
     def default_starting_position
-      Board.array_to_string([
+      [
         %w{r n b q k b n r},
         %w{p p p p p p p p},
         [nil] * 8,
@@ -27,7 +23,7 @@ module Chess
         [nil] * 8,
         %w{P P P P P P P P},
         %w{R N B Q K B N R}
-      ])
+      ]
     end
   end
 end

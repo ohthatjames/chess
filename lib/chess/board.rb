@@ -1,7 +1,7 @@
 module Chess
   class Board
     def self.from_fen(fen)
-      new(FenInput.new(fen).squares)
+      new(array_to_string(FenInput.new(fen).squares))
     end
 
     def self.array_to_string(array)

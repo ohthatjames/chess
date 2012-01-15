@@ -7,9 +7,16 @@ class FenInput
   end
 
   def squares
-    pieces_from_fen.
-      gsub(/\//, "\n").
-      gsub(/(\d)/) {|m| "." * $1.to_i}
+    pieces_from_fen.split("/").map do |rank|
+      rank.split('').inject([]) do |squares, file|
+        if file.to_i > 0
+          squares += [nil] * file.to_i
+        else
+          squares << file
+        end
+        squares
+      end
+    end
   end
 
   private

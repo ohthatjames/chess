@@ -1,16 +1,9 @@
 module Chess
   class Board
     def self.from_fen(fen)
-      squares = fen.split(" ").first.split('/').inject("") do |output, line|
-        line.split('').each do |char|
-          if char.to_i > 0
-            output << "." * char.to_i
-          else
-            output << char
-          end
-        end
-        output + "\n"
-      end
+      squares = fen.split(" ").first.
+        gsub(/\//, "\n").
+        gsub(/(\d)/) {|m| "." * $1.to_i}
       new(squares.strip)
     end
 

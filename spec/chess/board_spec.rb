@@ -1,5 +1,6 @@
 require 'support/position_matcher'
 require 'chess/board'
+require 'chess/fen_input'
 
 describe Chess::Board do
   context "in its initial state" do

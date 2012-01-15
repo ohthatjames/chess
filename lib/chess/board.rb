@@ -1,9 +1,7 @@
 module Chess
   class Board
     def self.from_fen(fen)
-      squares = FenInput.pieces_from_fen(fen).
-        gsub(/\//, "\n").
-        gsub(/(\d)/) {|m| "." * $1.to_i}
+      squares = FenInput.squares(fen)
       new(squares.strip)
     end
 

@@ -9,8 +9,7 @@ module Chess
     end
 
     def to_s
-      position = @squares
-      position.strip.tr(' ', '')
+      @squares.strip.tr(' ', '')
     end
 
     private

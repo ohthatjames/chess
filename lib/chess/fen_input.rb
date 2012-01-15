@@ -1,6 +1,10 @@
 class FenInput
-  def self.squares(fen)
-    pieces_from_fen(fen).
+  def initialize(fen)
+    @fen = fen
+  end
+
+  def squares
+    FenInput.pieces_from_fen(@fen).
       gsub(/\//, "\n").
       gsub(/(\d)/) {|m| "." * $1.to_i}
   end

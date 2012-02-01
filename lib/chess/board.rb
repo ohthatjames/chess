@@ -16,6 +16,12 @@ module Chess
       @squares.map {|rank| rank.map {|file| file.nil? ? "." : file }.join }.join("\n")
     end
 
+    def move(from, to)
+      piece = get_piece_at(from)
+      set_piece_at(from, nil)
+      set_piece_at(to, piece)
+    end
+
     private
     def default_starting_position
       [
@@ -36,6 +42,20 @@ module Chess
       elsif @squares.any? {|file| file.size != FILE_COUNT }
         raise ArgumentError, "Each rank must have 8 files"
       end
+    end
+
+    def get_piece_at(square)
+      rank, file = coordinates_of(square)
+      @squares[rank][file]
+    end
+
+    def set_piece_at(square, piece)
+      rank, file = coordinates_of(square)
+      @squares[rank][file] = piece
+    end
+
+    def coordinates_of(square)
+      [8 - square[1,1].to_i, square[0] - 97]
     end
   end
 end

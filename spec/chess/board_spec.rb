@@ -82,4 +82,30 @@ describe Chess::Board do
       end
     end
   end
+
+  describe "#move" do
+    it "moves the piece from the square it's on to the new square" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil]
+      ])
+      board.move("a8", "a7")
+      board.should match_position <<-EOF
+        ........
+        K.......
+        ........
+        ........
+        ........
+        ........
+        ........
+        ..k.....
+      EOF
+    end
+  end
 end

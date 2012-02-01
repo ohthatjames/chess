@@ -44,14 +44,20 @@ module Chess
       end
     end
 
-    def get_piece_at(square)
-      rank, file = coordinates_of(square)
+    def [](rank, file)
       @squares[rank][file]
     end
 
-    def set_piece_at(square, piece)
-      rank, file = coordinates_of(square)
+    def []=(rank, file, piece)
       @squares[rank][file] = piece
+    end
+
+    def get_piece_at(square)
+      self[*coordinates_of(square)]
+    end
+
+    def set_piece_at(square, piece)
+      self[*coordinates_of(square)] = piece
     end
 
     def coordinates_of(square)

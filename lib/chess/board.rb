@@ -33,10 +33,10 @@ module Chess
       @squares.map {|rank| rank.map {|file| file.nil? ? "." : file }.join }.join("\n")
     end
 
-    def move(from, to)
+    def move(from, to, promotion_piece = nil)
       piece = get_piece_at(from)
       set_piece_at(from, nil)
-      set_piece_at(to, piece)
+      set_piece_at(to, promotion_piece || piece)
       change_player
     end
 

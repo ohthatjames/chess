@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Chess::Board do
-  context "in its initial state" do
+  context "in the default state" do
     it "has the pieces in the default setup" do
-      subject.should match_position <<-EOF
+      Chess::Board.default.should match_position <<-EOF
         rnbqkbnr
         pppppppp
         ........
@@ -14,11 +14,15 @@ describe Chess::Board do
         RNBQKBNR
       EOF
     end
+
+    it "starts with white's move" do
+      Chess::Board.default.player_to_move.should == :white
+    end
   end
 
   context ".from_fen" do
+    let(:board) { Chess::Board.from_fen("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2") }
     it "creates a board with the pieces in the positions specified" do
-      board = Chess::Board.from_fen("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2")
       board.should match_position <<-EOF
         rnbqkbnr
         pp.ppppp
@@ -43,7 +47,7 @@ describe Chess::Board do
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, "k", nil, nil, nil, nil, nil]
-      ])
+      ], :white)
       board.should match_position <<-EOF
         K.......
         ........
@@ -68,10 +72,6 @@ describe Chess::Board do
         [nil, nil, "k", nil, nil, nil, nil, nil]
       ], :black)
       board.player_to_move.should == :black
-    end
-
-    it "defaults the player's turn to white" do
-      Chess::Board.new.player_to_move.should == :white
     end
 
     let(:default_squares) { [[nil] * Chess::Board::FILE_COUNT] * Chess::Board::RANK_COUNT }
@@ -112,7 +112,7 @@ describe Chess::Board do
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, "k", nil, nil, nil, nil, nil]
-      ])
+      ], :white)
     end
 
     it "moves the piece from the square it's on to the new square" do

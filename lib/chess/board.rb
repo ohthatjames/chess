@@ -4,12 +4,25 @@ module Chess
     FILE_COUNT = 8
 
     def self.from_fen(fen)
-      new(FenInput.new(fen).squares)
+      new(FenInput.new(fen).squares, :white)
+    end
+
+    def self.default
+      new([
+        %w{r n b q k b n r},
+        %w{p p p p p p p p},
+        [nil] * 8,
+        [nil] * 8,
+        [nil] * 8,
+        [nil] * 8,
+        %w{P P P P P P P P},
+        %w{R N B Q K B N R}
+      ], :white)
     end
 
     attr_reader :player_to_move
 
-    def initialize(squares = nil, player_to_move = :white)
+    def initialize(squares, player_to_move)
       @squares = squares || default_starting_position
       @player_to_move = player_to_move
       validate_position

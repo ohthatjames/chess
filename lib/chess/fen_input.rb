@@ -20,6 +20,15 @@ module Chess
       end
     end
 
+    def player_to_move
+      character = @fen.split(" ")[1]
+      case character
+      when "w": :white
+      when "b": :black
+      else raise ArgumentError, "Invalid character in player to move: #{character}"
+      end
+    end
+
     private
     def pieces_from_fen
       @fen.split(" ").first

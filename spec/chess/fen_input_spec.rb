@@ -24,4 +24,21 @@ describe Chess::FenInput do
       ]
     end
   end
+
+  describe "#player_to_move" do
+    it "returns :white if the second value in the fen string is 'w'" do
+      fen_input = Chess::FenInput.new("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR w KQkq c6 0 2")
+      fen_input.player_to_move.should == :white
+    end
+
+    it "returns :black if the second value in the fen string is 'b'" do
+      fen_input = Chess::FenInput.new("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR b KQkq c6 0 2")
+      fen_input.player_to_move.should == :black
+    end
+
+    it "raises an error on any other second value" do
+      fen_input = Chess::FenInput.new("rnbqkbnr/pp1ppppp/8/2p5/4P3/8/PPPP1PPP/RNBQKBNR x KQkq c6 0 2")
+      expect { fen_input.player_to_move }.to raise_error(ArgumentError, "Invalid character in player to move: x")
+    end
+  end
 end

@@ -4,7 +4,8 @@ module Chess
     FILE_COUNT = 8
 
     def self.from_fen(fen)
-      new(FenInput.new(fen).squares, :white)
+      fen_input = FenInput.new(fen)
+      new(fen_input.squares, fen_input.player_to_move)
     end
 
     def self.default

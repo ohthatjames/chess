@@ -7,8 +7,11 @@ module Chess
       new(FenInput.new(fen).squares)
     end
 
-    def initialize(squares = nil)
+    attr_reader :player_to_move
+
+    def initialize(squares = nil, player_to_move = :white)
       @squares = squares || default_starting_position
+      @player_to_move = player_to_move
       validate_position
     end
 
@@ -20,6 +23,7 @@ module Chess
       piece = get_piece_at(from)
       set_piece_at(from, nil)
       set_piece_at(to, piece)
+      change_player
     end
 
     private
@@ -56,6 +60,10 @@ module Chess
 
     def coordinates_of(square)
       [8 - square[1,1].to_i, square[0] - 97]
+    end
+
+    def change_player
+      @player_to_move = @player_to_move == :white ? :black : :white
     end
   end
 end

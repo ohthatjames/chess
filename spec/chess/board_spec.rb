@@ -56,6 +56,24 @@ describe Chess::Board do
       EOF
     end
 
+    it "takes whose turn it is" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil]
+      ], :black)
+      board.player_to_move.should == :black
+    end
+
+    it "defaults the player's turn to white" do
+      Chess::Board.new.player_to_move.should == :white
+    end
+
     let(:default_squares) { [[nil] * Chess::Board::FILE_COUNT] * Chess::Board::RANK_COUNT }
 
     it "raises an error if the board has less than 8 ranks" do
@@ -84,8 +102,8 @@ describe Chess::Board do
   end
 
   describe "#move" do
-    it "moves the piece from the square it's on to the new square" do
-      board = Chess::Board.new([
+    let(:board) do
+      Chess::Board.new([
         ["K", nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
@@ -95,6 +113,9 @@ describe Chess::Board do
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, "k", nil, nil, nil, nil, nil]
       ])
+    end
+
+    it "moves the piece from the square it's on to the new square" do
       board.move("a8", "a7")
       board.should match_position <<-EOF
         ........
@@ -106,6 +127,13 @@ describe Chess::Board do
         ........
         ..k.....
       EOF
+    end
+
+    it "makes it the other player's turn" do
+      board.move("a8", "a7")
+      board.player_to_move.should == :black
+      board.move("c1", "c2")
+      board.player_to_move.should == :white
     end
   end
 end

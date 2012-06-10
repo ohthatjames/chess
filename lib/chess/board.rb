@@ -24,7 +24,7 @@ module Chess
     attr_reader :player_to_move
 
     def initialize(squares, player_to_move)
-      @squares = squares || default_starting_position
+      @squares = squares
       @player_to_move = player_to_move
       validate_position
     end
@@ -41,19 +41,6 @@ module Chess
     end
 
     private
-    def default_starting_position
-      [
-        %w{r n b q k b n r},
-        %w{p p p p p p p p},
-        [nil] * 8,
-        [nil] * 8,
-        [nil] * 8,
-        [nil] * 8,
-        %w{P P P P P P P P},
-        %w{R N B Q K B N R}
-      ]
-    end
-
     def validate_position
       if @squares.size != RANK_COUNT
         raise ArgumentError, "Board must have 8 ranks"

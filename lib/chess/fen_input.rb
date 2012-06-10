@@ -23,8 +23,8 @@ module Chess
     def player_to_move
       character = @fen.split(" ")[1]
       case character
-      when "w": :white
-      when "b": :black
+      when "w" then :white
+      when "b" then :black
       else raise ArgumentError, "Invalid character in player to move: #{character}"
       end
     end

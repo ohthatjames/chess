@@ -73,7 +73,7 @@ module Chess
     end
 
     def coordinates_of(square)
-      [8 - square[1,1].to_i, square[0] - 97]
+      [8 - square[1,1].to_i, square[0].ord - ?a.ord]
     end
 
     def change_player

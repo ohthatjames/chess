@@ -1,5 +1,16 @@
 require 'spec_helper'
 
+
+TEST_BOARD_ARRAY = [
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil]]
+
 describe Chess::Board do
   context "in the default state" do
     it "has the pieces in the default setup" do
@@ -38,16 +49,7 @@ describe Chess::Board do
 
   describe "#initialize" do
     it "takes a position as an array" do
-      board = Chess::Board.new([
-        ["K", nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, "k", nil, nil, nil, nil, nil]
-      ], :white)
+      board = Chess::Board.new(TEST_BOARD_ARRAY, :white)
       board.should match_position <<-EOF
         K.......
         ........
@@ -61,16 +63,7 @@ describe Chess::Board do
     end
 
     it "takes whose turn it is" do
-      board = Chess::Board.new([
-        ["K", nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, "k", nil, nil, nil, nil, nil]
-      ], :black)
+      board = Chess::Board.new(TEST_BOARD_ARRAY, :black)
       board.player_to_move.should == :black
     end
 

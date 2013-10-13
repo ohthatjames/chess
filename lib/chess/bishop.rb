@@ -13,6 +13,9 @@ module Chess
       square = from.offset(*offset)
       while board.valid_square?(square)
         end_squares << square
+        if board.piece_at(square)
+          return end_squares
+        end
         square = square.offset(*offset)
       end
       end_squares

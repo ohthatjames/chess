@@ -34,7 +34,7 @@ module Chess
     end
 
     def move(from, to, promotion_piece = nil)
-      piece = get_piece_at(from)
+      piece = piece_at(from)
       set_piece_at(from, nil)
       set_piece_at(to, promotion_piece || piece)
       change_player
@@ -46,6 +46,10 @@ module Chess
       square.file >= 0 &&
       square.file < FILE_COUNT
     end
+    
+    def piece_at(square)
+      @squares[RANK_COUNT - square.rank - 1][square.file]
+    end
 
     private
     def validate_position
@@ -54,10 +58,6 @@ module Chess
       elsif @squares.any? {|file| file.size != FILE_COUNT }
         raise ArgumentError, "Each rank must have 8 files"
       end
-    end
-
-    def get_piece_at(square)
-      @squares[RANK_COUNT - square.rank - 1][square.file]
     end
 
     def set_piece_at(square, piece)

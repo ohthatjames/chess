@@ -22,5 +22,10 @@ describe Chess::Bishop do
         "f1"
       ])
     end
+    
+    it "includes squares where enemy pieces are taken, but stops on that diagonal" do
+      board = Chess::Board.from_fen("8/8/8/8/8/8/1r6/B7 w KQkq - 0 2")
+      expect(Chess::Bishop.new.end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array(["b2"])
+    end
   end
 end

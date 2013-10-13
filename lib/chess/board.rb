@@ -24,7 +24,7 @@ module Chess
     attr_reader :player_to_move
 
     def initialize(squares, player_to_move)
-      @squares = squares
+      @squares = squares.map {|rank| rank.map {|file| file.is_a?(String) ? Piece.from_string(file) : file}}
       @player_to_move = player_to_move
       validate_position
     end
@@ -46,7 +46,7 @@ module Chess
       square.file >= 0 &&
       square.file < FILE_COUNT
     end
-    
+
     def piece_at(square)
       @squares[RANK_COUNT - square.rank - 1][square.file]
     end

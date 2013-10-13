@@ -109,7 +109,7 @@ describe Chess::Board do
     end
 
     it "moves the piece from the square it's on to the new square" do
-      board.move("a8", "a7")
+      board.move(Chess::Square.new("a8"), Chess::Square.new("a7"))
       board.should match_position <<-EOF
         ........
         K.....P.
@@ -123,14 +123,14 @@ describe Chess::Board do
     end
 
     it "makes it the other player's turn" do
-      board.move("a8", "a7")
+      board.move(Chess::Square.new("a8"), Chess::Square.new("a7"))
       board.player_to_move.should == :black
-      board.move("c1", "c2")
+      board.move(Chess::Square.new("c1"), Chess::Square.new("c2"))
       board.player_to_move.should == :white
     end
 
     it "will replace the piece with the passed in promotion piece" do
-      board.move("g7", "g8", "Q")
+      board.move(Chess::Square.new("g7"), Chess::Square.new("g8"), "Q")
       board.should match_position <<-EOF
         K.....Q.
         ........

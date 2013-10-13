@@ -50,17 +50,11 @@ module Chess
     end
 
     def get_piece_at(square)
-      rank, file = coordinates_of(square)
-      @squares[rank][file]
+      @squares[RANK_COUNT - square.rank - 1][square.file]
     end
 
     def set_piece_at(square, piece)
-      rank, file = coordinates_of(square)
-      @squares[rank][file] = piece
-    end
-
-    def coordinates_of(square)
-      [8 - square[1,1].to_i, square[0].ord - ?a.ord]
+      @squares[RANK_COUNT - square.rank - 1][square.file] = piece
     end
 
     def change_player

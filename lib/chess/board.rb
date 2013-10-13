@@ -40,6 +40,13 @@ module Chess
       change_player
     end
 
+    def valid_square?(square)
+      square.rank >= 0 &&
+      square.rank < RANK_COUNT &&
+      square.file >= 0 &&
+      square.file < FILE_COUNT
+    end
+
     private
     def validate_position
       if @squares.size != RANK_COUNT

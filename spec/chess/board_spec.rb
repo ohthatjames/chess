@@ -130,7 +130,7 @@ describe Chess::Board do
     end
 
     it "will replace the piece with the passed in promotion piece" do
-      board.move(Chess::Square.new("g7"), Chess::Square.new("g8"), "Q")
+      board.move(Chess::Square.new("g7"), Chess::Square.new("g8"), Chess::Queen.new(:white))
       board.should match_position <<-EOF
         K.....Q.
         ........

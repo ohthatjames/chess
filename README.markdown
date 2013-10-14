@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/ohthatjames/chess.png)](https://codeclimate.com/github/ohthatjames/chess)
+
 Chess
 =====
 

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Chess::Bishop do
   describe "#end_squares" do
     it "returns all the diagonal squares to the edges of the board" do
-      board = Chess::Board.from_fen("8/8/8/2B5/8/8/8/8 w KQkq - 0 2")
+      board = Chess::Board.from_fen("8/8/8/8/2B5/8/8/8 w KQkq - 0 2")
       expect(Chess::Bishop.new(:white).end_squares(Chess::Square.new("c4"), board).map(&:notation)).to match_array([
         # SW
         "b3",
@@ -28,7 +28,7 @@ describe Chess::Bishop do
       expect(Chess::Bishop.new(:white).end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array(["b2"])
     end
 
-    it "includes stops before friendly pieces" do
+    it "stops before friendly pieces" do
       board = Chess::Board.from_fen("8/8/8/8/8/8/1R6/B7 w KQkq - 0 2")
       expect(Chess::Bishop.new(:white).end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array([])
     end

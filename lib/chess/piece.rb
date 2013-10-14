@@ -6,22 +6,26 @@ module Chess
       @colour = colour
     end
 
+    def self.register_as(string_representation)
+      @@registered_pieces ||= {}
+      raise "Already registered: '#{string_representation}'" if @@registered_pieces[string_representation.upcase]
+      @@registered_pieces[string_representation.upcase] = self
+      @string_representation = string_representation
+    end
+
+    def self.string_representation
+      @string_representation
+    end
+
     def self.from_string(string)
-      klass = case string.downcase
-        when "k" then King
-        when "q" then Queen
-        when "r" then Rook
-        when "b" then Bishop
-        when "n" then Knight
-        when "p" then Pawn
-        else raise "Invalid piece representation"
-      end
+      klass = @@registered_pieces[string.upcase]
+      raise "Invalid piece representation: '#{string}'" unless klass
       colour = string.ord < "a".ord ? :white : :black
       klass.new(colour)
     end
 
     def string_representation
-      raise NotImplementedError "You must define a string representation"
+      self.class.string_representation or raise "You must register this Piece"
     end
 
     def to_s

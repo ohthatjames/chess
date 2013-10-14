@@ -1,8 +1,6 @@
 module Chess
   class Bishop < Piece
-    def string_representation
-      "B"
-    end
+    register_as "B"
 
     def end_squares(from, board)
       offsets = [[1,1], [-1, -1], [1, -1], [-1, 1]]

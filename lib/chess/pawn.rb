@@ -1,8 +1,6 @@
 module Chess
   class Pawn < Piece
-    def string_representation
-      "P"
-    end
+    register_as "P"
 
     def end_squares(from, board)
       squares = forward_moves(from, board)

@@ -1,8 +1,6 @@
 module Chess
   class King < Piece
-    def string_representation
-      "K"
-    end
+    register_as "K"
 
     def end_squares(from, board)
       offsets = [[0,1], [0, -1], [1, 0], [-1, 0], [1, -1], [-1, 1], [1, 1], [-1, -1]]

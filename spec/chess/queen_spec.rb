@@ -4,7 +4,7 @@ describe Chess::Queen do
   describe "#end_squares" do
     it "returns all the diagonal, rank and file squares to the edges of the board" do
       board = Chess::Board.from_fen("8/8/8/8/2Q5/8/8/8 w KQkq - 0 2")
-      expect(Chess::Queen.new(:white).end_squares(Chess::Square.new("c4"), board).map(&:notation)).to match_array([
+      expect(Chess::Queen.new(:white)).to have_end_squares("c4", board, [
         # SW
         "b3",
         "a2",
@@ -43,12 +43,12 @@ describe Chess::Queen do
 
     it "includes squares where enemy pieces are taken, but stops on that diagonal, rank or file" do
       board = Chess::Board.from_fen("8/8/8/8/8/8/rr6/Qr6 w KQkq - 0 2")
-      expect(Chess::Queen.new(:white).end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array(["b2", "a2", "b1"])
+      expect(Chess::Queen.new(:white)).to have_end_squares("a1", board, ["b2", "a2", "b1"])
     end
 
     it "stops before friendly pieces" do
       board = Chess::Board.from_fen("8/8/8/8/8/8/RR6/QR6 w KQkq - 0 2")
-      expect(Chess::Queen.new(:white).end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array([])
+      expect(Chess::Queen.new(:white)).to have_end_squares("a1", board, [])
     end
   end
 end

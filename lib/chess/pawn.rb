@@ -5,17 +5,35 @@ module Chess
     end
 
     def end_squares(from, board)
-      direction = colour == :white ? 1 : -1
-      squares = []
-      square = from.offset(0, direction)
-      squares << square unless board.piece_at(square)
-      if (from.rank == 1 && colour == :white) || from.rank == 6
-        if board.piece_at(from.offset(0, direction)).nil? && board.piece_at(from.offset(0, direction * 2)).nil?
-          squares << from.offset(0, direction * 2)
-        end
-      end
+      squares = forward_moves(from, board)
       squares += gather_capturing_offsets(from, board, [[1, direction], [-1, direction]])
       squares
+    end
+
+    private
+    def forward_moves(from, board)
+      squares = []
+      (1..max_squares_forward(colour, from.rank)).each do |offset|
+        square = from.offset(0, direction * offset)
+        if board.piece_at(square)
+          return squares
+        else
+          squares << square
+        end
+      end
+      squares
+    end
+
+    def direction
+      colour == :white ? 1 : -1
+    end
+
+    def max_squares_forward(colour, rank)
+      if (rank == 1 && colour == :white) || rank == 6
+        2
+      else
+        1
+      end
     end
 
     def gather_capturing_offsets(from, board, offsets)

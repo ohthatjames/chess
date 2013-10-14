@@ -27,5 +27,28 @@ module Chess
     def to_s
       colour == :white ? string_representation.upcase : string_representation.downcase
     end
+
+    private
+    def gather_repeated_offsets(from, board, offsets)
+      offsets.map do |offset|
+        all_squares_with_offset(from, board, offset)
+      end.flatten
+    end
+
+    def all_squares_with_offset(from, board, offset)
+      end_squares = []
+      square = from.offset(*offset)
+      while board.valid_square?(square)
+        piece = board.piece_at(square)
+        if piece.nil? || piece.colour != colour
+          end_squares << square
+        end
+        if piece
+          return end_squares
+        end
+        square = square.offset(*offset)
+      end
+      end_squares
+    end
   end
 end

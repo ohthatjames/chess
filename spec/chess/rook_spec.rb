@@ -25,7 +25,7 @@ describe Chess::Rook do
         "c1"
       ])
     end
-    
+
     it "includes squares where enemy pieces are taken, but stops on that rank or file" do
       board = Chess::Board.from_fen("8/8/8/8/8/8/r7/Rr6 w KQkq - 0 2")
       expect(Chess::Rook.new(:white).end_squares(Chess::Square.new("a1"), board).map(&:notation)).to match_array(["a2", "b1"])

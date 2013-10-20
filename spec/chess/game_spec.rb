@@ -114,5 +114,22 @@ describe Chess::Game do
         subject.move(Chess::Square.new("b7"), Chess::Square.new("b6"))
       }.to raise_error(Chess::InvalidMove)
     end
+
+    it "allows enemy pinned pieces to still count as an attacking piece" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, "Q", nil, nil, nil, nil, "P", nil],
+        [nil, nil, nil, nil, "B", nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil]
+      ])
+      game = Chess::Game.new(board, :white)
+      expect {
+        game.move(Chess::Square.new("b7"), Chess::Square.new("b6"))
+      }.to raise_error(Chess::InvalidMove)
+    end
   end
 end

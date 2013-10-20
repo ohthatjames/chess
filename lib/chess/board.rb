@@ -54,11 +54,23 @@ module Chess
       @squares.each_with_index do |rank, rank_index|
         rank.each_with_index do |file, file_index|
           if file.is_a?(piece_type) && file.colour == colour
-            piece_squares << Chess::Square.new(file_index, RANK_COUNT - rank_index - 1)
+            piece_squares << Square.new(file_index, RANK_COUNT - rank_index - 1)
           end
         end
       end
       piece_squares
+    end
+
+    def square_being_attacked?(square, colour)
+      @squares.each_with_index do |rank, rank_index|
+        rank.each_with_index do |file, file_index|
+          file_square = Square.new(file_index, RANK_COUNT - rank_index - 1)
+          if file && file.colour == colour && file.capturing_squares(file_square, self).include?(square)
+            return true
+          end
+        end
+      end
+      false
     end
 
     protected

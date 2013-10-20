@@ -4,8 +4,12 @@ module Chess
 
     def end_squares(from, board)
       squares = forward_moves(from, board)
-      squares += gather_capturing_offsets(from, board, [[1, direction], [-1, direction]])
+      squares += capturing_squares(from, board)
       squares
+    end
+
+    def capturing_squares(from, board)
+      gather_capturing_offsets(from, board, [[1, direction], [-1, direction]])
     end
 
     private

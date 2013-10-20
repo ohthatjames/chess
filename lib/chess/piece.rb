@@ -32,6 +32,10 @@ module Chess
       colour == :white ? string_representation.upcase : string_representation.downcase
     end
 
+    def capturing_squares(from, board)
+      end_squares(from, board)
+    end
+
     private
     def gather_repeated_offsets(from, board, offsets)
       offsets.map do |offset|

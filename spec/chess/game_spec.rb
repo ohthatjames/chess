@@ -110,11 +110,9 @@ describe Chess::Game do
     end
 
     it "raises an error if the move leaves the King in check" do
-      pending do
-        expect {
-          subject.move(Chess::Square.new("b7"), Chess::Square.new("b6"))
-        }.to raise_error(Chess::InvalidMove)
-      end
+      expect {
+        subject.move(Chess::Square.new("b7"), Chess::Square.new("b6"))
+      }.to raise_error(Chess::InvalidMove)
     end
   end
 end

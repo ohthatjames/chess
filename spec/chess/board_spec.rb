@@ -137,4 +137,18 @@ describe Chess::Board do
       subject.squares_with_piece(Chess::Knight, :white).should == [Chess::Square.new("b1"), Chess::Square.new("g1")]
     end
   end
+
+  describe "#square_being_attacked?" do
+    subject { Chess::Board.default }
+
+    it "returns false if the square isn't being attacked by the player" do
+      subject.square_being_attacked?(Chess::Square.new("e5"), :white).should be_false
+      subject.square_being_attacked?(Chess::Square.new("e5"), :black).should be_false
+    end
+
+    it "returns true if any pieces by the player are attacking the square" do
+      subject.square_being_attacked?(Chess::Square.new("c3"), :white).should be_true
+      subject.square_being_attacked?(Chess::Square.new("c3"), :black).should be_false
+    end
+  end
 end

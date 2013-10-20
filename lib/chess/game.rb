@@ -19,7 +19,7 @@ module Chess
       raise InvalidMove unless valid_move?(from, to)
       @board = board.move(from, to, promotion_piece)
       square_with_friendly_king = board.squares_with_piece(King, player_to_move).first
-      raise InvalidMove if square_being_attacked?(square_with_friendly_king, other_player)
+      raise InvalidMove if board.square_being_attacked?(square_with_friendly_king, other_player)
       change_player
     end
 
@@ -29,10 +29,6 @@ module Chess
       return !piece.nil? &&
         piece.colour == player_to_move &&
         piece.end_squares(from, @board).include?(to)
-    end
-
-    def square_being_attacked?(square, by_player)
-      false
     end
 
     def change_player

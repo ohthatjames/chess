@@ -132,4 +132,51 @@ describe Chess::Game do
       }.to raise_error(Chess::InvalidMove)
     end
   end
+
+  describe "state" do
+    it "is :play under normal play" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, "Q", nil, nil, nil, nil, "P", nil],
+        [nil, nil, nil, nil, "B", nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil]
+      ])
+      game = Chess::Game.new(board, :white)
+      game.state.should == :play
+    end
+
+    it "is check if the current player is being attacked" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, "P", nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil]
+      ])
+      game = Chess::Game.new(board, :white)
+      game.state.should == :check
+    end
+
+    it "is check if the attacking piece is pinned" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, "P", nil],
+        [nil, nil, nil, nil, "B", nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil]
+      ])
+      game = Chess::Game.new(board, :white)
+      game.state.should == :check
+    end
+  end
 end

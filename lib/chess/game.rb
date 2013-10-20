@@ -15,15 +15,28 @@ module Chess
       @board, @player_to_move = board, player_to_move
     end
 
+    def state
+      if check?(board)
+        :check
+      else
+        :play
+      end
+    end
+
     def move(from, to, promotion_piece=nil)
       raise InvalidMove unless valid_move?(from, to)
-      @board = board.move(from, to, promotion_piece)
-      square_with_friendly_king = board.squares_with_piece(King, player_to_move).first
-      raise InvalidMove if board.square_being_attacked?(square_with_friendly_king, other_player)
+      new_board = board.move(from, to, promotion_piece)
+      raise InvalidMove if check?(new_board)
+      @board = new_board
       change_player
     end
 
     private
+    def check?(board)
+      square_with_friendly_king = board.squares_with_piece(King, player_to_move).first
+      board.square_being_attacked?(square_with_friendly_king, other_player)
+    end
+
     def valid_move?(from, to)
       piece = board.piece_at(from)
       return !piece.nil? &&

@@ -151,4 +151,35 @@ describe Chess::Board do
       subject.square_being_attacked?(Chess::Square.new("c3"), :black).should be_false
     end
   end
+
+  describe "#all_moves" do
+    subject { Chess::Board.default }
+
+    it "returns all the moves for all pieces" do
+      subject.all_moves(:white).map {|m| m.map(&:notation)}.should match_array([
+        ["a2", "a3"],
+        ["a2", "a4"],
+        ["b2", "b3"],
+        ["b2", "b4"],
+        ["c2", "c3"],
+        ["c2", "c4"],
+        ["d2", "d3"],
+        ["d2", "d4"],
+        ["e2", "e3"],
+        ["e2", "e4"],
+        ["f2", "f3"],
+        ["f2", "f4"],
+        ["g2", "g3"],
+        ["g2", "g4"],
+        ["h2", "h3"],
+        ["h2", "h4"],
+
+        ["b1", "a3"],
+        ["b1", "c3"],
+
+        ["g1", "f3"],
+        ["g1", "h3"],
+      ])
+    end
+  end
 end

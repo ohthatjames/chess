@@ -46,9 +46,9 @@ describe Chess::Game do
     let(:board) do
       Chess::Board.new([
         ["K", nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, "P", nil],
+        [nil, "Q", nil, nil, nil, nil, "P", nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
-        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
@@ -60,9 +60,9 @@ describe Chess::Game do
       subject.move(Chess::Square.new("a8"), Chess::Square.new("a7"))
       subject.board.should match_position <<-EOF
         ........
-        K.....P.
+        KQ....P.
         ........
-        ........
+        ...b....
         ........
         ........
         ........
@@ -81,9 +81,9 @@ describe Chess::Game do
       subject.move(Chess::Square.new("g7"), Chess::Square.new("g8"), Chess::Queen.new(:white))
       subject.board.should match_position <<-EOF
         K.....Q.
+        .Q......
         ........
-        ........
-        ........
+        ...b....
         ........
         ........
         ........
@@ -107,6 +107,14 @@ describe Chess::Game do
       expect {
         subject.move(Chess::Square.new("g7"), Chess::Square.new("g5"))
       }.to raise_error(Chess::InvalidMove)
+    end
+
+    it "raises an error if the move leaves the King in check" do
+      pending do
+        expect {
+          subject.move(Chess::Square.new("b7"), Chess::Square.new("b6"))
+        }.to raise_error(Chess::InvalidMove)
+      end
     end
   end
 end

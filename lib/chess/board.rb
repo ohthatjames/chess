@@ -49,6 +49,18 @@ module Chess
       @squares[RANK_COUNT - square.rank - 1][square.file]
     end
 
+    def squares_with_piece(piece_type, colour)
+      piece_squares = []
+      @squares.each_with_index do |rank, rank_index|
+        rank.each_with_index do |file, file_index|
+          if file.is_a?(piece_type) && file.colour == colour
+            piece_squares << Chess::Square.new(file_index, RANK_COUNT - rank_index - 1)
+          end
+        end
+      end
+      piece_squares
+    end
+
     protected
 
     def set_piece_at(square, piece)

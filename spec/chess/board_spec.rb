@@ -127,4 +127,14 @@ describe Chess::Board do
       EOF
     end
   end
+
+  describe "#squares_with_piece" do
+    subject { Chess::Board.default }
+
+    it "returns the squares with the given piece on it" do
+      subject.squares_with_piece(Chess::King, :white).should == [Chess::Square.new("e1")]
+      subject.squares_with_piece(Chess::King, :black).should == [Chess::Square.new("e8")]
+      subject.squares_with_piece(Chess::Knight, :white).should == [Chess::Square.new("b1"), Chess::Square.new("g1")]
+    end
+  end
 end

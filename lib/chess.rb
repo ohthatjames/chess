@@ -1,6 +1,7 @@
 require "chess/version"
 require 'chess/board'
 require 'chess/fen_input'
+require 'chess/game'
 require 'chess/square'
 require 'chess/piece'
 require 'chess/king'

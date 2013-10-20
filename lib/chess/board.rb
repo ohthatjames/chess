@@ -5,7 +5,7 @@ module Chess
 
     def self.from_fen(fen)
       fen_input = FenInput.new(fen)
-      new(fen_input.squares, fen_input.player_to_move)
+      new(fen_input.squares)
     end
 
     def self.default
@@ -18,14 +18,11 @@ module Chess
         [nil] * 8,
         %w{P P P P P P P P},
         %w{R N B Q K B N R}
-      ], :white)
+      ])
     end
 
-    attr_reader :player_to_move
-
-    def initialize(squares, player_to_move)
+    def initialize(squares)
       @squares = squares.map {|rank| rank.map {|file| file.is_a?(String) ? Piece.from_string(file) : file}}
-      @player_to_move = player_to_move
       validate_position
     end
 
@@ -37,7 +34,6 @@ module Chess
       piece = piece_at(from)
       set_piece_at(from, nil)
       set_piece_at(to, promotion_piece || piece)
-      change_player
     end
 
     def valid_square?(square)
@@ -62,10 +58,6 @@ module Chess
 
     def set_piece_at(square, piece)
       @squares[RANK_COUNT - square.rank - 1][square.file] = piece
-    end
-
-    def change_player
-      @player_to_move = @player_to_move == :white ? :black : :white
     end
   end
 end

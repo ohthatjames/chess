@@ -25,10 +25,6 @@ describe Chess::Board do
         RNBQKBNR
       EOF
     end
-
-    it "starts with white's move" do
-      Chess::Board.default.player_to_move.should == :white
-    end
   end
 
   context ".from_fen" do
@@ -49,7 +45,7 @@ describe Chess::Board do
 
   describe "#initialize" do
     it "takes a position as an array" do
-      board = Chess::Board.new(TEST_BOARD_ARRAY, :white)
+      board = Chess::Board.new(TEST_BOARD_ARRAY)
       board.should match_position <<-EOF
         K.......
         ........
@@ -60,11 +56,6 @@ describe Chess::Board do
         ........
         ..k.....
       EOF
-    end
-
-    it "takes whose turn it is" do
-      board = Chess::Board.new(TEST_BOARD_ARRAY, :black)
-      board.player_to_move.should == :black
     end
 
     let(:default_squares) { [[nil] * Chess::Board::FILE_COUNT] * Chess::Board::RANK_COUNT }
@@ -105,7 +96,7 @@ describe Chess::Board do
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, nil, nil, nil, nil, nil, nil],
         [nil, nil, "k", nil, nil, nil, nil, nil]
-      ], :white)
+      ])
     end
 
     it "moves the piece from the square it's on to the new square" do
@@ -120,13 +111,6 @@ describe Chess::Board do
         ........
         ..k.....
       EOF
-    end
-
-    it "makes it the other player's turn" do
-      board.move(Chess::Square.new("a8"), Chess::Square.new("a7"))
-      board.player_to_move.should == :black
-      board.move(Chess::Square.new("c1"), Chess::Square.new("c2"))
-      board.player_to_move.should == :white
     end
 
     it "will replace the piece with the passed in promotion piece" do

@@ -16,13 +16,19 @@ module Chess
     end
 
     def move(from, to, promotion_piece=nil)
-      piece = board.piece_at(from)
-      raise InvalidMove if piece.nil? || piece.colour != player_to_move
+      raise InvalidMove unless valid_move?(from, to)
       @board = board.move(from, to, promotion_piece)
       change_player
     end
 
     private
+    def valid_move?(from, to)
+      piece = board.piece_at(from)
+      return !piece.nil? &&
+        piece.colour == player_to_move &&
+        piece.end_squares(from, @board).include?(to)
+    end
+
     def change_player
       @player_to_move = @player_to_move == :white ? :black : :white
     end

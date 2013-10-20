@@ -51,23 +51,18 @@ module Chess
 
     def squares_with_piece(piece_type, colour)
       piece_squares = []
-      @squares.each_with_index do |rank, rank_index|
-        rank.each_with_index do |file, file_index|
-          if file.is_a?(piece_type) && file.colour == colour
-            piece_squares << Square.new(file_index, RANK_COUNT - rank_index - 1)
-          end
+      each_square do |square, piece|
+        if piece.is_a?(piece_type) && piece.colour == colour
+          piece_squares << square
         end
       end
       piece_squares
     end
 
     def square_being_attacked?(square, colour)
-      @squares.each_with_index do |rank, rank_index|
-        rank.each_with_index do |file, file_index|
-          file_square = Square.new(file_index, RANK_COUNT - rank_index - 1)
-          if file && file.colour == colour && file.capturing_squares(file_square, self).include?(square)
-            return true
-          end
+      each_square do |from_square, piece|
+        if piece && piece.colour == colour && piece.capturing_squares(from_square, self).include?(square)
+          return true
         end
       end
       false
@@ -80,6 +75,15 @@ module Chess
     end
 
     private
+    def each_square(&block)
+      @squares.each_with_index do |rank, rank_index|
+        rank.each_with_index do |piece, file_index|
+          square = Square.new(file_index, RANK_COUNT - rank_index - 1)
+          block.call(square, piece)
+        end
+      end
+    end
+
     def validate_position
       if @squares.size != RANK_COUNT
         raise ArgumentError, "Board must have 8 ranks"

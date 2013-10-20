@@ -96,5 +96,11 @@ describe Chess::Game do
         subject.move(Chess::Square.new("g1"), Chess::Square.new("g8"))
       }.to raise_error(Chess::InvalidMove)
     end
+    
+    it "raises an error if the piece isn't for the player to move" do
+      expect {
+        subject.move(Chess::Square.new("c1"), Chess::Square.new("c2"))
+      }.to raise_error(Chess::InvalidMove)
+    end
   end
 end

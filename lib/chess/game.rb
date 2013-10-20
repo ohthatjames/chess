@@ -16,6 +16,8 @@ module Chess
     end
 
     def move(from, to, promotion_piece=nil)
+      piece = board.piece_at(from)
+      raise InvalidMove if piece.nil? || piece.colour != player_to_move
       @board = board.move(from, to, promotion_piece)
       change_player
     end

@@ -16,7 +16,7 @@ module Chess
     end
 
     def move(from, to, promotion_piece=nil)
-      board.move(from, to, promotion_piece)
+      @board = board.move(from, to, promotion_piece)
       change_player
     end
 

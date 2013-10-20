@@ -33,6 +33,7 @@ module Chess
     def move(from, to, promotion_piece = nil)
       board = Board.new(@squares)
       piece = board.piece_at(from)
+      raise InvalidMove if piece.nil?
       board.set_piece_at(from, nil)
       board.set_piece_at(to, promotion_piece || piece)
       board

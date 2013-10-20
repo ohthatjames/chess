@@ -10,3 +10,9 @@ require 'chess/rook'
 require 'chess/bishop'
 require 'chess/knight'
 require 'chess/pawn'
+
+module Chess
+  # Base class for all chess exceptions
+  class Exception < Exception;end
+  class InvalidMove < Chess::Exception;end
+end

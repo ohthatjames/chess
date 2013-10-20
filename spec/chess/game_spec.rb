@@ -90,5 +90,11 @@ describe Chess::Game do
         ..k.....
       EOF
     end
+
+    it "raises an error if the move doesn't have a piece in the from square" do
+      expect {
+        subject.move(Chess::Square.new("g1"), Chess::Square.new("g8"))
+      }.to raise_error(Chess::InvalidMove)
+    end
   end
 end

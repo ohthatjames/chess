@@ -178,5 +178,20 @@ describe Chess::Game do
       game = Chess::Game.new(board, :white)
       game.state.should == :check
     end
+
+    it "is checkmate if the king is in check and there are no valid moves" do
+      board = Chess::Board.new([
+        ["K", nil, nil, nil, nil, nil, nil, nil],
+        [nil, "q", nil, nil, nil, nil, "P", nil],
+        [nil, nil, nil, nil, "B", nil, nil, nil],
+        [nil, nil, nil, "b", nil, nil, nil, nil],
+        [nil, nil, "k", nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, nil, nil]
+      ])
+      game = Chess::Game.new(board, :white)
+      game.state.should == :checkmate
+    end
   end
 end

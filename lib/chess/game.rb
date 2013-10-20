@@ -16,7 +16,9 @@ module Chess
     end
 
     def state
-      if check?(board)
+      if check?(board) && valid_moves(board.all_moves(player_to_move)).empty?
+        :checkmate
+      elsif check?(board)
         :check
       else
         :play
@@ -34,7 +36,16 @@ module Chess
     private
     def check?(board)
       square_with_friendly_king = board.squares_with_piece(King, player_to_move).first
+      # If there's no king, a move has removed it, so it's check
+      return true if square_with_friendly_king.nil?
       board.square_being_attacked?(square_with_friendly_king, other_player)
+    end
+
+    def valid_moves(moves)
+      moves.reject do |(from, to)|
+        new_board = board.move(from, to)
+        check?(new_board)
+      end
     end
 
     def valid_move?(from, to)

@@ -65,7 +65,7 @@ module Chess
 
     def all_moves(colour)
       each_square.with_object([]) do |(square, piece), moves|
-        if piece
+        if piece && piece.colour == colour
           piece.end_squares(square, self).each do |to_square|
             moves << [square, to_square]
           end

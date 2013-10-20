@@ -20,6 +20,8 @@ module Chess
         :checkmate
       elsif check?(board)
         :check
+      elsif valid_moves(board.all_moves(player_to_move)).empty?
+        :draw
       else
         :play
       end

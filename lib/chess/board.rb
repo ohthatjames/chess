@@ -50,22 +50,17 @@ module Chess
     end
 
     def squares_with_piece(piece_type, colour)
-      piece_squares = []
-      each_square do |square, piece|
+      each_square.with_object([]) do |(square, piece), piece_squares|
         if piece.is_a?(piece_type) && piece.colour == colour
           piece_squares << square
         end
       end
-      piece_squares
     end
 
     def square_being_attacked?(square, colour)
-      each_square do |from_square, piece|
-        if piece && piece.colour == colour && piece.capturing_squares(from_square, self).include?(square)
-          return true
-        end
+      each_square.any? do |from_square, piece|
+        piece && piece.colour == colour && piece.capturing_squares(from_square, self).include?(square)
       end
-      false
     end
 
     protected
@@ -75,13 +70,13 @@ module Chess
     end
 
     private
-    def each_square(&block)
-      @squares.each_with_index do |rank, rank_index|
-        rank.each_with_index do |piece, file_index|
+    def each_square
+      @squares.map.with_index do |rank, rank_index|
+        rank.map.with_index do |piece, file_index|
           square = Square.new(file_index, RANK_COUNT - rank_index - 1)
-          block.call(square, piece)
+          [square, piece]
         end
-      end
+      end.flatten(1).each
     end
 
     def validate_position
